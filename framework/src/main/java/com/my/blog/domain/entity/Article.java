@@ -2,7 +2,7 @@ package com.my.blog.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
+import com.my.blog.dao.CategoryMapper;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

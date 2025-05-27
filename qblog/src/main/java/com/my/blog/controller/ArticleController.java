@@ -1,12 +1,14 @@
 package com.my.blog.controller;
 
-import com.my.blog.service.IArticleService;
-import com.my.blog.domain.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.my.blog.domain.ResponseResult;
+import com.my.blog.service.IArticleService;
 
 /**
  * <p>
@@ -27,5 +29,17 @@ public class ArticleController {
     @ResponseBody
     public ResponseResult hotArticleList() {
         return articleService.hotArticleList();
+    }
+    @GetMapping("/articleList")
+    @ResponseBody
+    public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+        ResponseResult result = articleService.articleList(pageNum, pageSize, categoryId);
+        return result;
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public ResponseResult getArticleDetail(@PathVariable("id") Long id) {
+        return articleService.getArticleDetail(id);
     }
 }

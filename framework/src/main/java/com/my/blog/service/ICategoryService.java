@@ -1,6 +1,7 @@
 package com.my.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.my.blog.domain.ResponseResult;
 import com.my.blog.domain.entity.Category;
 
 /**
@@ -13,4 +14,5 @@ import com.my.blog.domain.entity.Category;
  */
 public interface ICategoryService extends IService<Category> {
 
+    ResponseResult getCategoryList();
 }
