@@ -1,4 +1,4 @@
-package com.my.blog.entity;
+package com.my.blog.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -8,48 +8,34 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 评论表
+ * 友链
  * </p>
  *
  * @author CWJ
  * @since 2025-05-26
  */
-public class Comment implements Serializable {
+public class Link implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 评论类型（0代表文章评论，1代表友链评论）
-     */
-    private String type;
+    private String name;
+
+    private String logo;
+
+    private String description;
 
     /**
-     * 文章id
+     * 网站地址
      */
-    private Long articleId;
+    private String address;
 
     /**
-     * 根评论id
+     * 审核状态 (0代表审核通过，1代表审核未通过，2代表未审核)
      */
-    private Long rootId;
-
-    /**
-     * 评论内容
-     */
-    private String content;
-
-    /**
-     * 所回复的目标评论的userid
-     */
-    private Long toCommentUserId;
-
-    /**
-     * 回复目标评论id
-     */
-    private Long toCommentId;
+    private String status;
 
     private Long createBy;
 
@@ -72,52 +58,44 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Long getArticleId() {
-        return articleId;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
-    public Long getRootId() {
-        return rootId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRootId(Long rootId) {
-        this.rootId = rootId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getContent() {
-        return content;
+    public String getAddress() {
+        return address;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Long getToCommentUserId() {
-        return toCommentUserId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setToCommentUserId(Long toCommentUserId) {
-        this.toCommentUserId = toCommentUserId;
-    }
-
-    public Long getToCommentId() {
-        return toCommentId;
-    }
-
-    public void setToCommentId(Long toCommentId) {
-        this.toCommentId = toCommentId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Long getCreateBy() {
@@ -162,14 +140,13 @@ public class Comment implements Serializable {
 
     @Override
     public String toString() {
-        return "Comment{" +
+        return "Link{" +
             "id = " + id +
-            ", type = " + type +
-            ", articleId = " + articleId +
-            ", rootId = " + rootId +
-            ", content = " + content +
-            ", toCommentUserId = " + toCommentUserId +
-            ", toCommentId = " + toCommentId +
+            ", name = " + name +
+            ", logo = " + logo +
+            ", description = " + description +
+            ", address = " + address +
+            ", status = " + status +
             ", createBy = " + createBy +
             ", createTime = " + createTime +
             ", updateBy = " + updateBy +

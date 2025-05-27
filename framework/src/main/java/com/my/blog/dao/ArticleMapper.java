@@ -1,7 +1,7 @@
 package com.my.blog.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.my.blog.entity.Article;
+import com.my.blog.domain.entity.Article;
 
 /**
  * <p>

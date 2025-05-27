@@ -1,7 +1,8 @@
 package com.my.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.my.blog.entity.Article;
+import com.my.blog.domain.ResponseResult;
+import com.my.blog.domain.entity.Article;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.my.blog.entity.Article;
  */
 public interface IArticleService extends IService<Article> {
 
+    ResponseResult hotArticleList();
 }

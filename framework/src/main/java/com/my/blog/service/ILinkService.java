@@ -1,7 +1,7 @@
 package com.my.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.my.blog.entity.Link;
+import com.my.blog.domain.entity.Link;
 
 /**
  * <p>

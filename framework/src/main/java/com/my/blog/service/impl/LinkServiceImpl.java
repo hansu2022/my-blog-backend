@@ -2,7 +2,7 @@ package com.my.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.my.blog.dao.LinkMapper;
-import com.my.blog.entity.Link;
+import com.my.blog.domain.entity.Link;
 import com.my.blog.service.ILinkService;
 import org.springframework.stereotype.Service;
 

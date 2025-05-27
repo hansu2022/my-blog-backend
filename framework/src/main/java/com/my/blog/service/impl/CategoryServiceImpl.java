@@ -2,7 +2,7 @@ package com.my.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.my.blog.dao.CategoryMapper;
-import com.my.blog.entity.Category;
+import com.my.blog.domain.entity.Category;
 import com.my.blog.service.ICategoryService;
 import org.springframework.stereotype.Service;
 

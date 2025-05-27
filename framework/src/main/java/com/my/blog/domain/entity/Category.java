@@ -1,4 +1,4 @@
-package com.my.blog.entity;
+package com.my.blog.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 文章表
+ * 分类表
  * </p>
  *
  * @author CWJ
  * @since 2025-05-26
  */
-public class Article implements Serializable {
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,49 +22,24 @@ public class Article implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * 分类名
      */
-    private String title;
+    private String name;
 
     /**
-     * 文章内容
+     * 父分类id，如果没有父分类为-1
      */
-    private String content;
+    private Long pid;
 
     /**
-     * 文章摘要
+     * 描述
      */
-    private String summary;
+    private String description;
 
     /**
-     * 所属分类id
-     */
-    private Long categoryId;
-
-    /**
-     * 缩略图
-     */
-    private String thumbnail;
-
-    /**
-     * 是否置顶（0否，1是）
-     */
-    private String isTop;
-
-    /**
-     * 状态（0已发布，1草稿）
+     * 状态0:正常,1禁用
      */
     private String status;
-
-    /**
-     * 访问量
-     */
-    private Long viewCount;
-
-    /**
-     * 是否允许评论 1是，0否
-     */
-    private String isComment;
 
     private Long createBy;
 
@@ -87,52 +62,28 @@ public class Article implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public Long getPid() {
+        return pid;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPid(Long pid) {
+        this.pid = pid;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
-    public String getIsTop() {
-        return isTop;
-    }
-
-    public void setIsTop(String isTop) {
-        this.isTop = isTop;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStatus() {
@@ -141,22 +92,6 @@ public class Article implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Long getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(Long viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public String getIsComment() {
-        return isComment;
-    }
-
-    public void setIsComment(String isComment) {
-        this.isComment = isComment;
     }
 
     public Long getCreateBy() {
@@ -201,17 +136,12 @@ public class Article implements Serializable {
 
     @Override
     public String toString() {
-        return "Article{" +
+        return "Category{" +
             "id = " + id +
-            ", title = " + title +
-            ", content = " + content +
-            ", summary = " + summary +
-            ", categoryId = " + categoryId +
-            ", thumbnail = " + thumbnail +
-            ", isTop = " + isTop +
+            ", name = " + name +
+            ", pid = " + pid +
+            ", description = " + description +
             ", status = " + status +
-            ", viewCount = " + viewCount +
-            ", isComment = " + isComment +
             ", createBy = " + createBy +
             ", createTime = " + createTime +
             ", updateBy = " + updateBy +
