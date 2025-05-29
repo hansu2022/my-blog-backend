@@ -1,6 +1,7 @@
 package com.my.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.my.blog.domain.ResponseResult;
 import com.my.blog.domain.entity.User;
 
 /**
@@ -13,4 +14,5 @@ import com.my.blog.domain.entity.User;
  */
 public interface IUserService extends IService<User> {
 
+    ResponseResult userInfo(Long userId);
 }

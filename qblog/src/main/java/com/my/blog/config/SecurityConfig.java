@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .antMatchers("/login").anonymous()
                 .antMatchers("/logout").authenticated()
                 .antMatchers("/comment").authenticated()
+                .antMatchers("/user/userInfo").authenticated()
                 .anyRequest().permitAll();
 
         http.logout().disable();
