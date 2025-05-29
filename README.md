@@ -63,7 +63,7 @@ The project is organized into a multi-module Maven project:
 
 1.  **Clone the repository**:
     ```bash
-    git clone <repository_url>
+    git clone [<repository_url>](https://github.com/hansu2022/my-blog-backend.git)
     cd my-blog-backend
     ```
 
@@ -208,7 +208,7 @@ Common error codes and messages are defined in `AppHttpCodeEnum`.
 
 1.  **克隆仓库**：
     ```bash
-    git clone <repository_url>
+    git clone [<repository_url>](https://github.com/hansu2022/my-blog-backend.git)
     cd my-blog-backend
     ```
 
