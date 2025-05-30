@@ -17,4 +17,8 @@ public interface IUserService extends IService<User> {
     ResponseResult userInfo(Long userId);
 
     ResponseResult getUserList(int pageNum, int pageSize, String userName, String phonenumber, String status);
+
+    ResponseResult updateUserInfo(User user);
+
+    ResponseResult register(User user);
 }

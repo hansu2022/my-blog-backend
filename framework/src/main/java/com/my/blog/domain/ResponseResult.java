@@ -28,7 +28,7 @@ public class ResponseResult<T> implements Serializable {
 
     public static ResponseResult okResult(Object data) {
         ResponseResult result = new ResponseResult();
-        if (data != null) {
+        if (data == null) {
             result.setData(data);
         }
         return result;

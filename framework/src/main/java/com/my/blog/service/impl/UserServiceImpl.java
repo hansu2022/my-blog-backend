@@ -9,13 +9,17 @@ import com.my.blog.domain.entity.User;
 import com.my.blog.domain.vo.PageVo;
 import com.my.blog.domain.vo.UserInfoVo;
 import com.my.blog.domain.vo.UserListVo;
+import com.my.blog.enums.AppHttpCodeEnum;
+import com.my.blog.exception.SystemException;
 import com.my.blog.service.IUserService;
 import com.my.blog.utils.BeanCopyUtils;
 import com.my.blog.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import sun.security.util.Password;
 
 import java.util.List;
 
@@ -32,6 +36,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    PasswordEncoder  passwordEncoder;
+
     @GetMapping("/userInfo")
     public ResponseResult userInfo(Long userId) {
         Long userId2 = SecurityUtils.getUserId();
@@ -54,4 +61,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         List<UserListVo> userListVos = BeanCopyUtils.copyBeanList(page.getRecords(), UserListVo.class);
         return ResponseResult.okResult(new PageVo(userListVos, page.getTotal()));
     }
+
+    @Override
+    public ResponseResult updateUserInfo(User user) {
+        userMapper.updateById(user);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult register(User user) {
+        if (user.getNickName().isEmpty()) {
+            throw new SystemException( AppHttpCodeEnum.USERNAME_NOT__NULL);
+        }
+        if (user.getEmail().isEmpty()) {
+            throw new SystemException( AppHttpCodeEnum.EMAIL_NOT__NULL);
+        }
+        if (emailExist(user.getEmail())){
+            throw new SystemException(AppHttpCodeEnum.EMAIL_EXIST);
+        }
+        if (userNameExist(user.getUserName())){
+            throw new SystemException(AppHttpCodeEnum.USERNAME_EXIST);
+        }
+
+        String encode = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encode);
+        userMapper.insert(user);
+        return ResponseResult.okResult();
+    }
+    private boolean emailExist(String email) {
+       return userMapper.selectCount(new LambdaQueryWrapper<User>().eq(User::getEmail, email))>0;
+    }
+    private boolean userNameExist(String userName) {
+        return userMapper.selectCount(new LambdaQueryWrapper<User>().eq(User::getUserName, userName))>0;
+    }
+
 }

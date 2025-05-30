@@ -9,10 +9,7 @@ import com.my.blog.utils.SecurityUtils;
 import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -31,5 +28,14 @@ public class UserController {
     public ResponseResult userInfo(@RequestParam("userId") Long userId) {
         return userService.userInfo(userId);
     }
-
+    @PutMapping("/userInfo")
+    @ResponseBody
+    public ResponseResult updateUserInfo(@RequestBody User user){
+        return userService.updateUserInfo(user);
+    }
+    @PostMapping("/register")
+    @ResponseBody
+    public ResponseResult register(@RequestBody User user){
+        return userService.register(user);
+    }
 }
