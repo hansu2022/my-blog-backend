@@ -15,4 +15,6 @@ import com.my.blog.domain.entity.User;
 public interface IUserService extends IService<User> {
 
     ResponseResult userInfo(Long userId);
+
+    ResponseResult getUserList(int pageNum, int pageSize, String userName, String phonenumber, String status);
 }
