@@ -39,11 +39,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
 
     @Override
-    public ResponseResult commentList(Long articleId, Integer pageNum, Integer pagesize) {
+    public ResponseResult commentList(String commentType,Long articleId, Integer pageNum, Integer pagesize) {
         //取根评论
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<Comment>()
-        .eq(Comment::getArticleId, articleId)
+        .eq(articleId !=null,Comment::getArticleId, articleId)
         .eq(Comment::getRootId, -1L)
+                .eq(Comment::getType,commentType)
         .orderByDesc(Comment::getCreateTime);
 
         //分页查询

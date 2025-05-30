@@ -31,7 +31,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Override
     public ResponseResult getCategoryList() {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL);
+        queryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_COMMENT);
         List<Article> articles = articleService.list(queryWrapper);
 
         Set<Long> categoryIds = articles.stream()

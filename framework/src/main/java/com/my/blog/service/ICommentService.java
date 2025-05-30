@@ -14,7 +14,7 @@ import com.my.blog.domain.entity.Comment;
  */
 public interface ICommentService extends IService<Comment> {
 
-    ResponseResult commentList(Long articleId, Integer pageNum, Integer pagesize);
+    ResponseResult commentList(String commentType,Long articleId, Integer pageNum, Integer pagesize);
 
     ResponseResult addComment(Comment comment);
 }

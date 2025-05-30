@@ -44,7 +44,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult hotArticleList() {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         // 必须是正式文章
-        queryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL);
+        queryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_COMMENT);
         // 按照浏览量进行排序
         queryWrapper.orderByDesc(Article::getViewCount);
         // 只查询前10条
@@ -68,7 +68,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
         //要求:①只能查询正式发布的文章 ②置顶的文章要显示在最前面
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL).orderByDesc(Article::getIsTop).eq(categoryId != 0, Article::getCategoryId, categoryId);
+        queryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_COMMENT).orderByDesc(Article::getIsTop).eq(categoryId != 0, Article::getCategoryId, categoryId);
         //分页查询
         Page<Article> page = new Page<>(pageNum, pageSize);
         articleMapper.selectPage(page, queryWrapper);

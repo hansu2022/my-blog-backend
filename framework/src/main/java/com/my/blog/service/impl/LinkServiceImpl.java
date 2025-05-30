@@ -32,7 +32,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements IL
     @Override
     public ResponseResult getAllLink() {
         LambdaQueryWrapper<Link> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Link::getStatus, SystemConstants.LINK_STATUS_NORMAL);
+        queryWrapper.eq(Link::getStatus, SystemConstants.LINK_COMMENT);
         List<Link> links = linkMapper.selectList(queryWrapper);
         //封装VO
         List<LinkVo> linkVos = new ArrayList<>();
