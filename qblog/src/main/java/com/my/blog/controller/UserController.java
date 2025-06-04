@@ -1,5 +1,6 @@
 package com.my.blog.controller;
 
+import com.my.blog.annotation.SystemLog;
 import com.my.blog.config.SecurityConfig;
 import com.my.blog.dao.UserMapper;
 import com.my.blog.domain.ResponseResult;
@@ -30,6 +31,7 @@ public class UserController {
     }
     @PutMapping("/userInfo")
     @ResponseBody
+    @SystemLog(businessName = "更新用户信息")
     public ResponseResult updateUserInfo(@RequestBody User user){
         return userService.updateUserInfo(user);
     }
