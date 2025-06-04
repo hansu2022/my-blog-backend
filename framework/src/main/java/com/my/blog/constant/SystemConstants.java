@@ -15,4 +15,9 @@ public class SystemConstants {
      */
     public static final String LINK_COMMENT = "1";
 
+    /**
+     * redis缓存文章浏览量key
+     */
+    public static final String VIEW_COUNT = "viewCount";
+
 }

@@ -203,7 +203,7 @@ public class RedisCache
 
     /**
      * 删除Hash中的数据
-     * 
+     *
      * @param key
      * @param hkey
      */
@@ -234,5 +234,9 @@ public class RedisCache
     public Collection<String> keys(final String pattern)
     {
         return redisTemplate.keys(pattern);
+    }
+
+    public <T> void addCacheMapValue(final String key, final String hKey, Integer value){
+        redisTemplate.opsForHash().increment(key, hKey, value);
     }
 }

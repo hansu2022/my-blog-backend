@@ -2,10 +2,7 @@ package com.my.blog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.my.blog.domain.ResponseResult;
 import com.my.blog.service.IArticleService;
@@ -41,5 +38,11 @@ public class ArticleController {
     @ResponseBody
     public ResponseResult getArticleDetail(@PathVariable("id") Long id) {
         return articleService.getArticleDetail(id);
+    }
+
+    @PutMapping("/updateViewCount/{id}")
+    @ResponseBody
+    public ResponseResult updateViewCount(@PathVariable("id")Long id){
+        return articleService.updateViewCount(id);
     }
 }
