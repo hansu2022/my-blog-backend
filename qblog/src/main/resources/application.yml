@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     username: root
-    password: root
+    password: 123456
   servlet:
     multipart:
         max-file-size: 2MB
@@ -20,3 +20,8 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto
+oss:
+  accessKey: G9pTwekzwSv0jL2obyXilNDr2YQGgZH4ibRnaxtB
+  secretKey: TBqJLBFkK7z26eqPs1ftYAFaXBJUKgCqg6KPbXbq
+  bucket: 229-blog
+  domin: http://sx0nxop1y.hn-bkt.clouddn.com/
