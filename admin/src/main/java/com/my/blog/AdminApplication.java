@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.my.blog.dao")
-public class SystemApplication {
+public class AdminApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SystemApplication.class, args);
-    }
+        SpringApplication.run(AdminApplication.class, args);}
 }
