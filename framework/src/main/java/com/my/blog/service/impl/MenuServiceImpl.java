@@ -53,8 +53,9 @@ public class MenuServiceImpl implements IMenuService {
         if(userId == 1L){
             LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
             wrapper.in(Menu::getMenuType, 'C', 'M')
-                    .eq(Menu::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL)
-                    .orderByAsc(Menu::getParentId, Menu::getOrderNum);
+       .eq(Menu::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL)
+       .orderByAsc(true, Menu::getParentId) // 第一个参数 true 表示升序
+       .orderByAsc(true, Menu::getOrderNum); // 再次调用 orderByAsc
             menus = menuMapper.selectList(wrapper);
         }
         else{
