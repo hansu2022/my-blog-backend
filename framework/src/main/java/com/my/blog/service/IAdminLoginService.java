@@ -5,4 +5,6 @@ import com.my.blog.domain.entity.User;
 
 public interface IAdminLoginService {
     ResponseResult login(User user);
+
+    ResponseResult logout();
 }

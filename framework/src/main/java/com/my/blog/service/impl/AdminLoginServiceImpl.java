@@ -8,6 +8,7 @@ import com.my.blog.domain.vo.UserInfoVo;
 import com.my.blog.service.IAdminLoginService;
 import com.my.blog.utils.JwtUtil;
 import com.my.blog.utils.RedisCache;
+import com.my.blog.utils.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,5 +45,12 @@ public class AdminLoginServiceImpl implements IAdminLoginService {
         HashMap<Object, Object> map = new HashMap<>();
         map.put("token", jwt);
         return ResponseResult.okResult(map);
+    }
+
+    @Override
+    public ResponseResult logout() {
+        Long userId = SecurityUtils.getUserId();
+        redisCache.deleteObject("adminlogin:" + userId);
+        return ResponseResult.okResult();
     }
 }

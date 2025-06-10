@@ -66,5 +66,8 @@ public class AdminLoginController {
         map.put("menus",menus);
         return ResponseResult.okResult(map);
     }
-
+    @PostMapping("/user/logout")
+    public ResponseResult logout(){
+        return adminLoginService.logout();
+    }
 }

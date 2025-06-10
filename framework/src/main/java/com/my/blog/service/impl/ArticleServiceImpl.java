@@ -14,6 +14,7 @@ import com.my.blog.domain.vo.HotArticleVo;
 import com.my.blog.domain.vo.PageVo;
 import com.my.blog.service.IArticleService;
 import com.my.blog.domain.ResponseResult;
+import com.my.blog.utils.BeanCopyUtils;
 import com.my.blog.utils.RedisCache;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,5 +115,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult updateViewCount(Long id) {
         redisCache.addCacheMapValue(SystemConstants.VIEW_COUNT, id.toString(), 1);
         return null;
+    }
+
+    @Override
+    public ResponseResult getAdminArticleList(Integer pageNum, Integer pageSize, String title, String summary) {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(title != null, Article::getTitle, title)
+                .like(summary != null, Article::getSummary, summary)
+                .orderByDesc(Article::getIsTop)
+                .orderByDesc(Article::getCreateTime);
+
+        Page<Article> articlePage = new Page<>(pageNum, pageSize);
+        articleMapper.selectPage(articlePage, queryWrapper);
+        List<Article> articles = articlePage.getRecords();
+
+        List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(articles, ArticleListVo.class);
+        PageVo pageVo = new PageVo(articleListVos, articlePage.getTotal());
+        return ResponseResult.okResult(pageVo);
     }
 }
