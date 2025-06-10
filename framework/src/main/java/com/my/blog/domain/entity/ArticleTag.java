@@ -3,6 +3,8 @@ package com.my.blog.domain.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +15,7 @@ import java.io.Serializable;
  * @author CWJ
  * @since 2025-06-10
  */
+@AllArgsConstructor
 @TableName("article_tag")
 public class ArticleTag implements Serializable {
 

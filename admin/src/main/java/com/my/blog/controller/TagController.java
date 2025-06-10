@@ -2,10 +2,14 @@ package com.my.blog.controller;
 
 import com.my.blog.domain.ResponseResult;
 import com.my.blog.domain.dto.TagListDto;
+import com.my.blog.domain.vo.TagVo;
 import com.my.blog.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.my.blog.domain.entity.Tag;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/content/tag")
 public class TagController {
@@ -34,5 +38,11 @@ public class TagController {
     @PutMapping
     public ResponseResult updateTag(@RequestBody Tag tag){
         return tagService.updateTag(tag);
+    }
+
+    @GetMapping("/listAllTag")
+    public ResponseResult listAllTag() {
+        List<TagVo> tagVos = tagService.listAllTag();
+        return ResponseResult.okResult(tagVos);
     }
 }

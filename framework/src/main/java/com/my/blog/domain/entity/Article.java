@@ -1,6 +1,8 @@
 package com.my.blog.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.my.blog.dao.CategoryMapper;
 import lombok.AllArgsConstructor;
@@ -73,12 +75,16 @@ public class Article implements Serializable {
      */
     private String isComment;
 
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
 
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     /**

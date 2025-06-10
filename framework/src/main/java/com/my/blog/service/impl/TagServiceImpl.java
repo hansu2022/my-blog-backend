@@ -6,15 +6,18 @@ import com.my.blog.domain.dto.TagListDto;
 import com.my.blog.domain.entity.Tag;
 import com.my.blog.dao.TagMapper;
 import com.my.blog.domain.vo.PageVo;
+import com.my.blog.domain.vo.TagVo;
 import com.my.blog.enums.AppHttpCodeEnum;
 import com.my.blog.exception.SystemException;
 import com.my.blog.service.ITagService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.my.blog.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -86,5 +89,14 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
         }
         tagMapper.updateById(tag);
         return ResponseResult.okResult("标签更新成功");
+    }
+
+    @Override
+    public List<TagVo> listAllTag() {
+        LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(Tag::getId, Tag::getName);
+        List<Tag> list = list(queryWrapper);
+        List<TagVo> tagVos = BeanCopyUtils.copyBeanList(list, TagVo.class);
+        return tagVos;
     }
 }

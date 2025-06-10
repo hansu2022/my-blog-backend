@@ -21,3 +21,8 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto
+oss:
+  accessKey: G9pTwekzwSv0jL2obyXilNDr2YQGgZH4ibRnaxtB
+  secretKey: TBqJLBFkK7z26eqPs1ftYAFaXBJUKgCqg6KPbXbq
+  bucket: 229-blog
+  domin: http://sx0nxop1y.hn-bkt.clouddn.com/

@@ -22,6 +22,10 @@ public class SystemConstants {
      * redis缓存文章浏览量key
      */
     public static final String VIEW_COUNT = "viewCount";
-    
+
+    /**
+     * 分类状态：正常
+     */
+    public static final String NORMAL = "0";
 
 }

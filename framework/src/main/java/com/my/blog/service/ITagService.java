@@ -4,6 +4,9 @@ import com.my.blog.domain.ResponseResult;
 import com.my.blog.domain.dto.TagListDto;
 import com.my.blog.domain.entity.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.my.blog.domain.vo.TagVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -24,4 +27,6 @@ public interface ITagService extends IService<Tag> {
     ResponseResult getTag(Long id);
 
     ResponseResult updateTag(Tag tag);
+
+   List<TagVo> listAllTag();
 }

@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.my.blog.constant.SystemConstants;
 import com.my.blog.dao.ArticleMapper;
 import com.my.blog.dao.CategoryMapper;
+import com.my.blog.domain.dto.AddArticleDto;
 import com.my.blog.domain.entity.Article;
+import com.my.blog.domain.entity.ArticleTag;
 import com.my.blog.domain.entity.Category;
 import com.my.blog.domain.vo.ArticleDetailVo;
 import com.my.blog.domain.vo.ArticleListVo;
@@ -14,6 +16,7 @@ import com.my.blog.domain.vo.HotArticleVo;
 import com.my.blog.domain.vo.PageVo;
 import com.my.blog.service.IArticleService;
 import com.my.blog.domain.ResponseResult;
+import com.my.blog.service.IArticleTagService;
 import com.my.blog.utils.BeanCopyUtils;
 import com.my.blog.utils.RedisCache;
 import org.springframework.beans.BeanUtils;
@@ -25,6 +28,7 @@ import com.my.blog.domain.vo.ArticleDetailVo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -43,6 +47,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private CategoryMapper categoryMapper;
     @Autowired
     private RedisCache redisCache;
+
+    @Autowired
+    private IArticleTagService articleTagService;
 
     @Override
     public ResponseResult hotArticleList() {
@@ -132,5 +139,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(articles, ArticleListVo.class);
         PageVo pageVo = new PageVo(articleListVos, articlePage.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult addArticle(AddArticleDto addArticleDto) {
+        // 添加博文
+        Article article = BeanCopyUtils.copyBean(addArticleDto, Article.class);
+        save(article);
+
+        // 添加博文 - tag 的关联关系
+        // List<Long> -> List<ArticleTag>
+        List<ArticleTag> articleTags = addArticleDto.getTags().stream()
+                .map(tagId -> new ArticleTag(article.getId(), tagId))
+                .collect(Collectors.toList());
+        articleTagService.saveBatch(articleTags);
+
+        return ResponseResult.okResult();
     }
 }
