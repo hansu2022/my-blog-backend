@@ -3,6 +3,7 @@ package com.my.blog.controller;
 import com.my.blog.domain.ResponseResult;
 import com.my.blog.domain.entity.User;
 import com.my.blog.domain.vo.AdminUserInfoVo;
+import com.my.blog.domain.vo.MenuVo;
 import com.my.blog.domain.vo.UserInfoVo;
 import com.my.blog.enums.AppHttpCodeEnum;
 import com.my.blog.exception.SystemException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -38,7 +40,7 @@ public class AdminLoginController {
         return adminLoginService.login(user);
     }
 
-    @GetMapping("/getI nfo")
+    @GetMapping("/getInfo")
     public ResponseResult<AdminUserInfoVo> getInfo(){
 //获取当前登录的用户
         User user = SecurityUtils.getLoginUser().getUser();
@@ -49,8 +51,20 @@ public class AdminLoginController {
 //获取用户信息
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
 //封装数据返回
-        AdminUserInfoVo adminUserInfoVo = new
-                AdminUserInfoVo(perms,roles,userInfoVo);
+        AdminUserInfoVo adminUserInfoVo = new AdminUserInfoVo(perms,roles,userInfoVo);
         return ResponseResult.okResult(adminUserInfoVo);
     }
+
+    @GetMapping("/getRouters")
+    public ResponseResult getRouters(){
+
+        Long userId = SecurityUtils.getUserId();
+
+        List<MenuVo> menus = menuService.selectRouterMenuTreeByUserId(userId);
+
+        HashMap<Object,Object> map = new HashMap<>();
+        map.put("menus",menus);
+        return ResponseResult.okResult(map);
+    }
+
 }

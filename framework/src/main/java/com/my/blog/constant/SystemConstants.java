@@ -22,5 +22,6 @@ public class SystemConstants {
      * redis缓存文章浏览量key
      */
     public static final String VIEW_COUNT = "viewCount";
+    
 
 }
