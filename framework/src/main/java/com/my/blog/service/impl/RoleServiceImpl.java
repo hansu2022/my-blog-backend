@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class RoleServiceImpl implements IRoleService {
     @Autowired
-    RoleMapper roleMapper;
+    private RoleMapper roleMapper;
 
     @Override
     public List<String> selectRoleKeyByUserId(Long id) {

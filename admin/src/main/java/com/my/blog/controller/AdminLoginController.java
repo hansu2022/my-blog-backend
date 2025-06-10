@@ -38,7 +38,7 @@ public class AdminLoginController {
         return adminLoginService.login(user);
     }
 
-    @GetMapping("/getInfo")
+    @GetMapping("/getI nfo")
     public ResponseResult<AdminUserInfoVo> getInfo(){
 //获取当前登录的用户
         User user = SecurityUtils.getLoginUser().getUser();
