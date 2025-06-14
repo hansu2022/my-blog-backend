@@ -2,7 +2,9 @@ package com.my.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.my.blog.domain.ResponseResult;
+import com.my.blog.domain.dto.UserDto;
 import com.my.blog.domain.entity.User;
+import com.my.blog.domain.vo.AdminUserInfoVo;
 
 /**
  * <p>
@@ -21,4 +23,12 @@ public interface IUserService extends IService<User> {
     ResponseResult updateUserInfo(User user);
 
     ResponseResult register(User user);
+
+    void addUser(UserDto userDto);
+
+    void deleteUserById(Long id);
+
+    ResponseResult getUserInfoById(Long id);
+
+    ResponseResult updateUser(UserDto userUpdateDto);
 }

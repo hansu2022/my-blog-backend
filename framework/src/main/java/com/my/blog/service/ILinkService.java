@@ -15,4 +15,14 @@ import com.my.blog.domain.entity.Link;
 public interface ILinkService extends IService<Link> {
 
     ResponseResult getAllLink();
+
+    ResponseResult getLinkList(Integer pageNum, Integer pageSize, String name);
+
+    void addLink(Link link);
+
+    ResponseResult getLinkById(Long id);
+
+    ResponseResult updateLinkById(Link link);
+
+    void deleteLinkById(Long id);
 }

@@ -2,9 +2,13 @@ package com.my.blog.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.my.blog.constant.SystemConstants;
 import com.my.blog.dao.MenuMapper;
+import com.my.blog.dao.RoleMenuMapper;
+import com.my.blog.domain.ResponseResult;
 import com.my.blog.domain.entity.Menu;
+import com.my.blog.domain.entity.RoleMenu;
 import com.my.blog.domain.vo.MenuVo;
 import com.my.blog.service.IMenuService;
 
@@ -17,6 +21,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * <p>
@@ -27,9 +34,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
  * @since 2025-06-05
  */
 @Service
-public class MenuServiceImpl implements IMenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
     @Autowired
     MenuMapper menuMapper;
+    @Autowired
+    private RoleMenuMapper roleMenuMapper;
     @Override
     public List<String> selectPermsByUserId(Long id) {
        if (id == 1L){
@@ -98,4 +107,109 @@ public class MenuServiceImpl implements IMenuService {
         return parent;
     }
 
+    @Override
+    public List<Menu> getMenuTree() {
+        List<Menu> menus = menuMapper.selectList(null);
+        // 找出根菜单
+        List<Menu> roots = menus.stream()
+                .filter(m -> m.getParentId() != null && m.getParentId() == 0)
+                .collect(Collectors.toList());
+
+        roots.forEach(root -> buildTree(root, menus));
+        return roots;
+    }
+
+    private void buildTree(Menu parent, List<Menu> allMenus) {
+        List<Menu> children = allMenus.stream()
+                .filter(m -> parent.getId().equals(m.getParentId()))
+                .collect(Collectors.toList());
+        parent.setChildren(children);
+        children.forEach(child -> buildTree(child, allMenus));
+    }
+    public List<MenuVo> selectMenuTreeAll() {
+        List<Menu> menus = menuMapper.selectList(
+                new LambdaQueryWrapper<Menu>()
+                        .in(Menu::getMenuType, "C", "M") // 目录和菜单
+                        .eq(Menu::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL)
+                        .orderByAsc(Menu::getParentId)
+                        .orderByAsc(Menu::getOrderNum)
+        );
+
+        List<MenuVo> menuVos = BeanCopyUtils.copyBeanList(menus, MenuVo.class);
+
+        return buildMenuTree(menuVos);
+    }
+
+    private List<MenuVo> buildMenuTree(List<MenuVo> menus) {
+        return menus.stream()
+                .filter(menu -> menu.getParentId().equals(0L))
+                .map(menu -> setChildren(menu, menus))
+                .collect(Collectors.toList());
+    }
+
+    private MenuVo setChildren(MenuVo parent, List<MenuVo> menus) {
+        List<MenuVo> children = menus.stream()
+                .filter(menu -> menu.getParentId().equals(parent.getId()))
+                .map(menu -> setChildren(menu, menus))
+                .collect(Collectors.toList());
+        parent.setChildren(children);
+        return parent;
+    }
+    public List<Long> selectMenuListByRoleId(Long roleId) {
+        return roleMenuMapper.selectList(
+                        new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, roleId)
+                ).stream()
+                .map(RoleMenu::getMenuId)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public ResponseResult selectMenuList(String status, String menuName) {
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+
+        if (StringUtils.hasText(status)) {
+            wrapper.eq(Menu::getStatus, status);
+        }
+
+        if (StringUtils.hasText(menuName)) {
+            wrapper.like(Menu::getMenuName, menuName);
+        }
+
+        wrapper.orderByAsc(Menu::getParentId).orderByAsc(Menu::getOrderNum);
+
+        List<Menu> menus = menuMapper.selectList(wrapper);
+        return ResponseResult.okResult(menus);
+    }
+    @Override
+    public ResponseResult addMenu(Menu menu) {
+        menuMapper.insert(menu);
+        return ResponseResult.okResult("添加成功");
+    }
+    @Override
+    public Menu getById(Long id) {
+        return baseMapper.selectById(id);
+    }
+    @Override
+    public boolean updateMenu(Menu menu) {
+        // 校验不能将父菜单设置为自己
+        if (menu.getId().equals(menu.getParentId())) {
+            throw new RuntimeException("修改菜单'" + menu.getMenuName() + "'失败，上级菜单不能选择自己");
+        }
+
+        // 执行更新
+        return this.updateById(menu);
+    }
+
+    @Override
+    public boolean removeMenu(Long menuId) {
+        // 校验该菜单是否有子菜单
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Menu::getParentId, menuId);
+        long childCount = this.count(wrapper);
+        if (childCount > 0) {
+            throw new RuntimeException("删除失败：请先删除子菜单");
+        }
+
+        // 正常删除
+        return this.removeById(menuId);
+    }
 }
