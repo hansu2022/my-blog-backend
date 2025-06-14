@@ -59,44 +59,6 @@ The project is organized into a multi-module Maven project:
 * MySQL 8.0.x
 * Redis
 
-#### Setup
-
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/hansu2022/my-blog-backend.git
-    cd my-blog-backend
-    ```
-
-2.  **Database Configuration**:
-    * Ensure you have a MySQL database running.
-    * Update the database connection properties in `qblog/src/main/resources/application.yml` with your MySQL credentials:
-        ```yaml
-        spring:
-          datasource:
-            url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
-            username: your_mysql_username
-            password: your_mysql_password
-        ```
-    * The `dataSources.xml` file indicates a local MySQL connection on port 3306.
-
-3.  **Redis Configuration**:
-    * Ensure you have a Redis instance running. No explicit configuration is shown in `application.yml`, implying default Spring Boot Redis connection properties are used or configured elsewhere.
-
-4.  **Build the project**:
-    ```bash
-    mvn clean install
-    ```
-
-5.  **Run the application**:
-    Navigate to the `qblog` module and run the main application class:
-    ```bash
-    cd qblog
-    mvn spring-boot:run
-    ```
-    Alternatively, you can run the `BlogApplication.java` file directly from your IDE.
-
-The application will start on port `7777` by default.
-
 ### API Endpoints
 
 Here are some of the key API endpoints provided by the backend:
@@ -204,41 +166,6 @@ Common error codes and messages are defined in `AppHttpCodeEnum`.
 * MySQL 8.0.x
 * Redis
 
-#### 设置
-
-1.  **克隆仓库**：
-    ```bash
-    git clone https://github.com/hansu2022/my-blog-backend.git
-    cd my-blog-backend
-    ```
-
-2.  **数据库配置**：
-    * 确保您的 MySQL 数据库正在运行。
-    * 在 `qblog/src/main/resources/application.yml` 中更新数据库连接属性：
-        ```yaml
-        spring:
-          datasource:
-            url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
-            username: your_mysql_username
-            password: your_mysql_password
-        ```
-    * `dataSources.xml` 文件表明本地 MySQL 连接在 3306 端口。
-
-3.  **Redis 配置**：
-    * 确保您的 Redis 实例正在运行。`application.yml` 中未显示明确的配置，这意味着使用了 Spring Boot 默认的 Redis 连接属性或在其他地方进行了配置。
-
-4.  **构建项目**：
-    ```bash
-    mvn clean install
-    ```
-
-5.  **运行应用程序**：
-    进入 `qblog` 模块并运行主应用程序类：
-    ```bash
-    cd qblog
-    mvn spring-boot:run
-    ```
-    或者，您可以直接从 IDE 运行 `BlogApplication.java` 文件。
 
 应用程序默认将在 `7777` 端口启动。
 
